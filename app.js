@@ -35,13 +35,21 @@ const server = http.createServer((req, res) => {
                 background-color: grey;
                 cursor: not-allowed;
             }
+            .click-info {
+                margin-top: 20px;
+                font-size: 18px;
+            }
         </style>
     </head>
     <body>
         <h1>Rate-Limited Buttons</h1>
         <button id="redButton" class="red" onclick="handleClick('red')">Red Button</button>
         <button id="blueButton" class="blue" onclick="handleClick('blue')">Blue Button</button>
-        <p id="message"></p>
+        <div class="click-info">
+            <p id="redClickInfo">Red button clicks: 0</p>
+            <p id="blueClickInfo">Blue button clicks: 0</p>
+            <p id="message"></p>
+        </div>
 
         <script>
             const MAX_CLICKS = 10; // Maximum clicks allowed per minute
@@ -50,6 +58,10 @@ const server = http.createServer((req, res) => {
                 red: { count: 0, timer: null },
                 blue: { count: 0, timer: null }
             };
+
+            function updateClickInfo(buttonType) {
+                document.getElementById(\`\${buttonType}ClickInfo\`).innerText = \`\${buttonType.charAt(0).toUpperCase() + buttonType.slice(1)} button clicks: \${clickLimits[buttonType].count}\`;
+            }
 
             function handleClick(buttonType) {
                 const buttonData = clickLimits[buttonType];
@@ -61,13 +73,14 @@ const server = http.createServer((req, res) => {
                         buttonData.timer = null;
                         button.disabled = false;
                         button.classList.remove('disabled');
+                        updateClickInfo(buttonType);
                         document.getElementById('message').innerText = \`\${buttonType.charAt(0).toUpperCase() + buttonType.slice(1)} button is active again!\`;
                     }, TIME_LIMIT);
                 }
 
                 if (buttonData.count < MAX_CLICKS) {
                     buttonData.count++;
-                    alert(\`\${buttonType.charAt(0).toUpperCase() + buttonType.slice(1)} Button Clicked!\`);
+                    updateClickInfo(buttonType);
                 } else {
                     button.disabled = true;
                     button.classList.add('disabled');
