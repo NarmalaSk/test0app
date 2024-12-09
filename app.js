@@ -31,37 +31,47 @@ const server = http.createServer((req, res) => {
             .blue {
                 background-color: blue;
             }
+            .disabled {
+                background-color: grey;
+                cursor: not-allowed;
+            }
         </style>
     </head>
     <body>
         <h1>Rate-Limited Buttons</h1>
-        <button class="red" onclick="handleClick('red')">Red Button</button>
-        <button class="blue" onclick="handleClick('blue')">Blue Button</button>
+        <button id="redButton" class="red" onclick="handleClick('red')">Red Button</button>
+        <button id="blueButton" class="blue" onclick="handleClick('blue')">Blue Button</button>
         <p id="message"></p>
 
         <script>
+            const MAX_CLICKS = 10; // Maximum clicks allowed per minute
+            const TIME_LIMIT = 60000; // 1 minute in milliseconds
             const clickLimits = {
                 red: { count: 0, timer: null },
                 blue: { count: 0, timer: null }
             };
-            const MAX_CLICKS = 10; // Maximum clicks allowed per minute
-            const TIME_LIMIT = 60000; // 1 minute in milliseconds
 
             function handleClick(buttonType) {
-                const button = clickLimits[buttonType];
-                if (!button.timer) {
-                    // Start a new timer if not already started
-                    button.timer = setTimeout(() => {
-                        button.count = 0; // Reset count after 1 minute
-                        button.timer = null;
+                const buttonData = clickLimits[buttonType];
+                const button = document.getElementById(\`\${buttonType}Button\`);
+
+                if (!buttonData.timer) {
+                    buttonData.timer = setTimeout(() => {
+                        buttonData.count = 0; // Reset count after 1 minute
+                        buttonData.timer = null;
+                        button.disabled = false;
+                        button.classList.remove('disabled');
+                        document.getElementById('message').innerText = \`\${buttonType.charAt(0).toUpperCase() + buttonType.slice(1)} button is active again!\`;
                     }, TIME_LIMIT);
                 }
 
-                if (button.count < MAX_CLICKS) {
-                    button.count++;
+                if (buttonData.count < MAX_CLICKS) {
+                    buttonData.count++;
                     alert(\`\${buttonType.charAt(0).toUpperCase() + buttonType.slice(1)} Button Clicked!\`);
                 } else {
-                    document.getElementById('message').innerText = \`You have reached the maximum clicks for the \${buttonType} button. Please wait a minute.\`;
+                    button.disabled = true;
+                    button.classList.add('disabled');
+                    document.getElementById('message').innerText = \`\${buttonType.charAt(0).toUpperCase() + buttonType.slice(1)} button is disabled. Wait for 1 minute.\`;
                 }
             }
         </script>
