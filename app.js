@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const { Client } = require('pg'); // Use 'mysql' for MySQL
+const { Client } = require('mysql'); // Use 'mysql' for MySQL
 const app = express();
 const port = process.env.PORT || 8080;
 
