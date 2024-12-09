@@ -6,7 +6,7 @@ const pool = mysql.createPool({
   host: '/cloudsql/gcpp-439515:us-central1:redblue', // Cloud SQL instance connection name
   user: 'sqlserver', // Your DB user
   password: 'redblue', // Your DB password
-  database: 'clicks_db', // Your database name
+  database: 'redblue', // Your database name
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
