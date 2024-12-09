@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 
 // MySQL connection setup
 const pool = mysql.createPool({
-  host: '/cloudsql/gcpp-439515:us-central1:redblue', // Cloud SQL instance connection name
+  host: '10.75.16.4', // Cloud SQL instance connection name
   user: 'sqlserver', // Your DB user
   password: 'redblue', // Your DB password
   database: 'redblue', // Your database name
