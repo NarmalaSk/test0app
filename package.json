@@ -1,18 +1,12 @@
 {
-    "name": "cloud-sql-cloud-run-mysql",
-    "version": "1.0.0",
-    "description": "Simple app to connect Cloud SQL MySQL with Cloud Run using UNIX socket",
-    "main": "app.js",
-    "scripts": {
-      "start": "node app.js"
-    },
-    "dependencies": {
-      "express": "^4.17.1",
-      "mysql2": "^3.0.0",
-      "dotenv": "^10.0.0"
-    },
-    "engines": {
-      "node": "14.x"
-    }
-  }
-  
+  "name": "simple-node-app",
+  "version": "1.0.0",
+  "description": "A simple Node.js app to demonstrate Dockerization",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Shashi Kumar",
+  "license": "MIT",
+  "dependencies": {}
+}
