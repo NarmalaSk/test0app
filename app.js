@@ -103,7 +103,7 @@ app.post('/click', async (req, res) => {
   // Insert the click data into the PostgreSQL database
   try {
     await client.query(
-      `INSERT INTO button_clicks (button_color, ip_address, click_count) VALUES ($1, $2, $3)`,
+      `INSERT INTO click_data (button_color, ip_address, click_count) VALUES ($1, $2, $3)`,
       [color, userIp.query, clickData[color].count]
     );
   } catch (error) {
