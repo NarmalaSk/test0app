@@ -3,6 +3,9 @@ const http = require('http');
 const PORT = process.env.PORT || 3000;
 
 const server = http.createServer((req, res) => {
+  // Get the visitor's IP address
+  const visitorIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
   res.writeHead(200, { 'Content-Type': 'text/html' });
   res.end(`
     <!DOCTYPE html>
@@ -43,6 +46,7 @@ const server = http.createServer((req, res) => {
     </head>
     <body>
         <h1>Rate-Limited Buttons</h1>
+        <p>Your IP address: <strong>${visitorIP}</strong></p>
         <button id="redButton" class="red" onclick="handleClick('red')">Red Button</button>
         <button id="blueButton" class="blue" onclick="handleClick('blue')">Blue Button</button>
         <div class="click-info">
